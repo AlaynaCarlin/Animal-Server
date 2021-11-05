@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { UniqueConstraintError } = require("sequelize/lib/errors");
 const { UserModel } = require("../models");
-const User = require("../models/user");
+// const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
@@ -37,7 +37,7 @@ router.post("/login", async (req, res) => {
     let { email, password } = req.body.user;
 
     try {
-        const loginUser = await User.findOne({
+        const loginUser = await UserModel.findOne({
             where: {
                 email: email,
             },
@@ -58,12 +58,12 @@ router.post("/login", async (req, res) => {
                 });
             } else {
                 res.status(401).json({
-                    message: "Incorrect email or password"
+                    message: "Incorrect email or password*"
                 })
             }
         } else {
             res.status(401).json({
-                message: "Incorrect email or password"
+                message: "Incorrect email* or password"
             });
         }
     } catch (error) {
